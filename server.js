@@ -8,9 +8,10 @@ console.log(process.env);
 
 
 app.get('/hello', (req, res) => {
-  const msg = `<h1>hello world!</h1>
-    <h2>goobye world</h2>
-    `;
+  const name = req.query.name;
+  const msg = `<h1>hello {name} !</h1>
+    <h2>goobye {name}</h2>`;
+    // console.log('QUERY PARAMS>>>>', req.query)
       res.writeHead(200, {
         'Content-Type': 'text/html'
       });
@@ -26,14 +27,30 @@ app.get('/hello', (req, res) => {
 
 
 
+
+app.get('/cal', (req, res) => {
+  const month = require ('node-cal/lib/month');
+  console.log(month);
+});
+
+
+
+
 app.get('/random', (req, res) => {
-  res.end(Math.random().toString());
+  res.send(Math.random().toString());
+});
+app.get('/random/:min/:max', req, res => {
+})
+  const min = req.params.min;
+  const max = req.params.max;
 });
 
 //all means all verbs and '*' means everything
-app.all('*', (req, res) => {
-  res.send(403, 'access denied!');
-})
+// app.all('*', (req, res) => {
+//   res
+//     .status(403)
+//     .send('access denied!');
+// })
 
 
 app.listen(PORT, () => {
