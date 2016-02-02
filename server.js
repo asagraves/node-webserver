@@ -5,16 +5,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 console.log(process.env);
 
-http.createServer((req, res) => {
-  console.log(req.method, req.url);
 
-  if (req.url === '/hello') {
-
-  } else if (req.url === '/random') {
-  } else {
-
-  }
-})
 
 app.get('/hello', (req, res) => {
   const msg = `<h1>hello world!</h1>
@@ -23,7 +14,6 @@ app.get('/hello', (req, res) => {
       res.writeHead(200, {
         'Content-Type': 'text/html'
       });
-      let time = 1000;
     msg.split('').forEach((char, i) => {
       setTimeout(() => {
       res.write(char);
@@ -31,8 +21,8 @@ app.get('/hello', (req, res) => {
     });
       setTimeout(() => {
         res.end();
-      }, 20000);
-})
+      }, msg.length * 1000 + 2000);
+});
 
 
 
@@ -42,8 +32,7 @@ app.get('/random', (req, res) => {
 
 //all means all verbs and '*' means everything
 app.all('*', (req, res) => {
-  res.writeHead(403);
-  res.end('access denied!');
+  res.send(403, 'access denied!');
 })
 
 
