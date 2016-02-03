@@ -1,6 +1,8 @@
 doctype html
 html
   head
-    title My awesome app
+    title= title
   body
-    h1 welcome to the my awesome app
+    h1 welcome to #{title}
+    p the date is now #{date.toLocalDateString('en-US')}
+
