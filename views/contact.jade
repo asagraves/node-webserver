@@ -1,0 +1,25 @@
+doctype html
+html
+    head
+      title#{title}
+    body
+      .container
+        h1 contact
+        form(method='POST')
+          .form-group
+            label Name
+            input(type='text', name='name', placeholder='Name')
+          .form-group
+            label email
+            input(type='email', name='email' placeholder='Email')
+          .form-group
+            label message
+            textarea(placeholder='Message', name='message')
+          .form-group
+            input(type='submit', value='contact us')
+
+
+
+
+
+

@@ -1,17 +1,47 @@
 'use strict';
 
 const app = express();
+const bodyParser = require('body-parser');
+const upload = require('multer')({ dest: 'tmp/uploads' });
+
 const PORT = process.env.PORT || 3000;
 
 app.set('view engine', 'jade');
 
+app.locals.title = 'THE super cool app';
+
+// app.use(bodyParser.urlencoded({ extended: false }));
+
+
 
 app.get('/', (req, res) => {
   res.render('index', {
-    title: 'Super cool app',
     date: new Date()
   });
 });
+
+
+app.get('/contact', (req, res) => {
+  if ( req.query.name) {
+    res.send('<h1>thanks for contacting</h1>');
+  }
+  res.render('contact')
+});
+
+
+app.post('/contact', (req, res) => {
+  console.log(req.body);
+  const name = req.body.name;
+  res.send('<h1>thanks for contacting us ${name}</h1>')
+
+});
+
+
+app.get('/sendphoto', (req, res) => {
+  res.render('sendphoto');
+});
+
+
 
 
 app.get('/hello', (req, res) => {
@@ -48,6 +78,7 @@ app.get('/hello', (req, res) => {
 app.get('/random', (req, res) => {
   res.send(Math.random().toString());
 });
+
 app.get('/random/:min/:max', req, res => {
 })
   const min = req.params.min;
