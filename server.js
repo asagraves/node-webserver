@@ -29,6 +29,13 @@ app.get('/contact', (req, res) => {
 });
 
 
+
+app.get('/api', (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.send ({hello: 'world'});
+});
+
+
 app.post('/contact', (req, res) => {
   console.log(req.body);
   const name = req.body.name;
@@ -41,6 +48,10 @@ app.get('/sendphoto', (req, res) => {
   res.render('sendphoto');
 });
 
+
+app.post('/sendphoto', upload.single('image'), (req, res) => {
+  res.send('<h1>thanks for sending photo</h1>')
+});
 
 
 
