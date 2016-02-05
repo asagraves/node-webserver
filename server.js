@@ -4,6 +4,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const upload = require('multer')({ dest: 'tmp/uploads' });
 const request = require('request');
+const _ = require('lodash');
 
 const PORT = process.env.PORT || 3000;
 
@@ -11,7 +12,8 @@ app.set('view engine', 'jade');
 
 app.locals.title = 'THE super cool app';
 
-// app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 
 
@@ -37,11 +39,20 @@ app.get('/api', (req, res) => {
 });
 
 
+app.post('/api', (req, res) => {
+  const obj = _.mapValues(req.body, val => val.toUpperCase());
+
+  res.send(obj);
+});
+
+
 app.get('/api/weather', (req, res) => {
-  const url = 'http.example.com'
+  const API_KEY = 'example API_KEY';
+  const url = 'http.example.com';
   request.get(url, (err, response, body) => {
     if (err) throw err;
 
+    res.header('Access-Control-Allow-Origin', '*');
     res.send(JSON.parse(body));
   });
 });
