@@ -3,6 +3,7 @@
 const app = express();
 const bodyParser = require('body-parser');
 const upload = require('multer')({ dest: 'tmp/uploads' });
+const request = require('request');
 
 const PORT = process.env.PORT || 3000;
 
@@ -33,6 +34,16 @@ app.get('/contact', (req, res) => {
 app.get('/api', (req, res) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.send ({hello: 'world'});
+});
+
+
+app.get('/api/weather', (req, res) => {
+  const url = 'http.example.com'
+  request.get(url, (err, response, body) => {
+    if (err) throw err;
+
+    res.send(JSON.parse(body));
+  });
 });
 
 
