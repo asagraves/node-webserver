@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const upload = require('multer')({ dest: 'tmp/uploads' });
 const request = require('request');
 const _ = require('lodash');
+const cheerio = require('cheerio');
 
 const PORT = process.env.PORT || 3000;
 
@@ -54,6 +55,36 @@ app.get('/api/weather', (req, res) => {
 
     res.header('Access-Control-Allow-Origin', '*');
     res.send(JSON.parse(body));
+  });
+});
+
+
+app.get('/api/news', (req, res) => {
+  const url = 'http://example.com';
+
+  request.get(url, (err, response, html) => {
+    if (err) throw err;
+
+    const news = {};
+    const $ = cheerio.load('html');
+
+    news.push ({
+      title: $.banner-text.text();
+      url: url + $banner-text.closest('a').attr('href')
+    });
+
+    const $cdHeadline = $('cd__headline');
+
+    _.range(1, 12).forEach( i => {
+      const $headline = $cd__headline.eq(i);
+
+      news.push({
+        title: $headline.eq(i).text(),
+        url: $headline.eq(i).find('a').attr('href')
+      });
+    });
+
+    res.send(news);
   });
 });
 
