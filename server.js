@@ -6,8 +6,18 @@ const upload = require('multer')({ dest: 'tmp/uploads' });
 const request = require('request');
 const _ = require('lodash');
 const cheerio = require('cheerio');
+const MongoClient = require('mongodb').MongoClient;
+
+const News = require('./models/news');
+const AllCaps = require('./models/allcaps');
+
+const routes = require('./routes/')
+
 
 const PORT = process.env.PORT || 3000;
+const MONGODB_URL = 'mongodb://localhost"example here"';
+
+
 
 app.set('view engine', 'jade');
 
@@ -128,33 +138,14 @@ app.get('/hello', (req, res) => {
       }, msg.length * 1000 + 2000);
 });
 
-
-
-
-// app.get('/cal', (req, res) => {
-//   const month = require ('node-cal/lib/month');
-//   console.log(month);
-// });
-
-
-
-
 app.get('/random', (req, res) => {
   res.send(Math.random().toString());
 });
 
 app.get('/random/:min/:max', req, res => {
-})
+});
   const min = req.params.min;
   const max = req.params.max;
-});
-
-//all means all verbs and '*' means everything
-// app.all('*', (req, res) => {
-//   res
-//     .status(403)
-//     .send('access denied!');
-// })
 
 
 app.listen(PORT, () => {
@@ -162,6 +153,7 @@ app.listen(PORT, () => {
 });
 
 
+module.exports = app;
 
 
 
