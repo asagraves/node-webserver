@@ -15,7 +15,7 @@ const routes = require('./routes/')
 
 
 const PORT = process.env.PORT || 3000;
-const MONGODB_URL = 'mongodb://localhost"example here"';
+const MONGODB_URL = 'mongodb://ds059135.mongolab.com:59135/node-webserver-andrew';
 
 
 
